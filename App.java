@@ -35,8 +35,11 @@ public class App {
 	        
 	        long startTime = System.currentTimeMillis();
 	        
+	        int numcellTow = 3;
+	        double sigma = 0.2;
+	        
 	        ArrayList<CellNetwork> cellNetworkConfigurations =
-	                mostPoints.getAllCellConfigurations(3, 0.1);
+	                mostPoints.getAllCellConfigurations(numcellTow, sigma);
 	        
 	        
 	        for(CellNetwork networks: cellNetworkConfigurations)
@@ -51,7 +54,7 @@ public class App {
 	        for (CellNetwork cn : cellNetworkConfigurations) {
 	            // do test on cn to see if cn's score is better than bestScore
 	            // if it is update bestCellConfiguration = cn
-	        	System.out.println(cn.coveredPoints);
+	        	System.out.println(cn.towers);
 	        	if(cn.pointsCovered() > bestScore){
 	        		bestScore = cn.coveredPoints;
 	        		bestCellConfiguration = cn;
@@ -66,7 +69,7 @@ public class App {
 	        long finishTime = System.currentTimeMillis();
 			try {
 				Report re = new Report(new File("report.txt"));
-				re.write(mostPoints, bestCellConfiguration, startTime, finishTime);
+				re.write(mostPoints, bestCellConfiguration, startTime, finishTime, numcellTow, sigma);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -81,6 +84,8 @@ public class App {
 		System.out.println("xmin: " + Boundaries.xmin);
 		System.out.println("ymax: " + Boundaries.ymax);
 		System.out.println("ymin: " + Boundaries.ymin);
+		
+		
 
         /*
          * Get a list of all of the cellular network configurations
@@ -117,7 +122,7 @@ public class App {
 //         * 
 //         */
 //
-//        StdDraw.save(imageFilename);
+        StdDraw.save("map.png");
 //        Report report = 
 //                new Report(new java.io.File(reportFilename));
 //        report.write();
