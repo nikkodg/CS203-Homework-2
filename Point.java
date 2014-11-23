@@ -1,59 +1,59 @@
-package hw1;
+package hw2;
 
-class Point extends GeometricObject {
-	int id;
-	double x, y;
 
-	public Point(int id, double x, double y) {
-		this.id = id;
-		this.x = x;
-		this.y = y;
-	}
 
-	public void drawLine(Point other) {
-		StdDraw.line(this.x, this.y, other.x, other.y);
-	}
+public class Point extends GeometricObject {
+    long id;
+    double x, y;
 
-	public Point(String line) {
-		String[] cols = line.split("\\s+");
-		this.id = Integer.parseInt(cols[0]);
-		this.x = Double.parseDouble(cols[1]);
-		this.y = Double.parseDouble(cols[2]);
-	}
+    public Point() { }
 
-	public Point(String line, boolean b) {
-        // write this construct such it takes a string that begins
-        // with "<node ... " and extract its x, y values;
-		if(b == true){	
-		int id = Integer.parseInt(OSM.extractStringFromVal(line, "id"));
-		double x = Double.parseDouble(OSM.extractStringFromVal(line, "lat"));
-		double y = Double.parseDouble(OSM.extractStringFromVal(line, "lon"));
-		
-		}
+    public Point(long id, double x, double y) {
+        this.id = id; this.x = x; this.y = y;
     }
-	
-	
-	public void draw() {
-		StdDraw.filledRectangle(x / 1000, y / 1000, 0.01, 0.01);
-	}
 
-	public void rescaleX() {
+    public void drawLine(Point other) {
+        // maybe easier to draw a line between other and me...
+    }
+
+    double Xr() { return x; }
+    double Yr() { return y; }
+
+    double Xs() { 
+//    	double oldmax = Boundaries.xmax;
+//		double oldmin = Boundaries.xmin;
+//		double newmax = 1.0;
+//		double newmin = 0.0;
+//
+//		return this.x = Math.abs(((x - oldmin) * newmax) / oldmax) + newmin;
+		return Math.abs((Xr()- Boundaries.xmin)/(Boundaries.xmax - Boundaries.xmin));
+    }
+
+    double Ys() { 
+//    	double oldmax = Boundaries.ymax;
+//		double oldmin = Boundaries.ymin;
+//		double newmax = 1.0;
+//		double newmin = 0.0;
+//		return this.y = Math.abs(((y - oldmin) * newmax) / oldmax) + newmin;
+		return Math.abs((Yr()- Boundaries.ymin)/(Boundaries.ymax - Boundaries.ymin));
+    }
+
+    public void rescaleX() {
 		// does not show up on map
-		double oldmax = 1000;
-		double oldmin = 0.0;
-		double newmax = 1.0;
-		double newmin = 0.0;
-
-		this.x = ((x - oldmin) * newmax) / oldmax + newmin;
-		setX(this.x);
+		
 		// this.x /= 1000;
 
 	}
 
+	private void setX(double x2) {
+		// TODO Auto-generated method stub
+		this.x = x2;
+	}
+
 	public void rescaleY() {
 		// does not show up on map
-		double oldmax = 1000;
-		double oldmin = 0.0;
+		double oldmax = Boundaries.ymax;
+		double oldmin = Boundaries.ymin;
 		double newmax = 1.0;
 		double newmin = 0.0;
 		this.y = ((y - oldmin) * newmax) / oldmax + newmin;
@@ -62,36 +62,43 @@ class Point extends GeometricObject {
 		// this.y /= 1000;
 
 	}
-
-	public void setId(int id) {
-		this.id = id;
+    
+    
+    
+    private void setY(double y2) {
+		// TODO Auto-generated method stub
+		this.y = y2;
 	}
 
-	public void setX(double x) {
-		this.x = x;
-	}
+	public Point(String line) {
+    }
 
-	public void setY(double y) {
-		this.y = y;
-	}
+    public Point(String line, boolean isOSM) {
+        if (isOSM) {
+            this.id = Long.parseLong( OSM.extractStringFromVal(line, "id"));
+            this.x =  Double.parseDouble( OSM.extractStringFromVal(line, "lon"));
+            this.y =  Double.parseDouble( OSM.extractStringFromVal(line, "lat"));
+        }
+    }
 
-	public double getArea() {
-		return 0;
-	}
+    public String toString() {
+        return "P " + id + " " + x + " " + y;
+    }
+    
+    public void draw() {
+        StdDraw.filledRectangle(Xs(), Ys(), 0.01, 0.01);
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void drawDot() {
+        StdDraw.filledCircle(Xs(), Ys(), 0.005);
+    }
 
-	public double getX() {
-		return x;
-	}
+    public double getArea() {
+        return 0;
+    }
 
-	public double getY() {
-		return y;
-	}
-
-	public String toString() {
-		return +x + " " + y;
-	}
+    public void dump() {
+        System.out.printf("p[%ld] = (%f,%f) => (%f,%f)\n", id, 
+                Xr(), Yr(), Xs(), Ys());
+    }
 }
