@@ -85,9 +85,9 @@ public class Road {
     }
     
     public String toString() {
-        String buffer = "R " + id;
+        String buffer = name + ": " + id +"\n";
         for (Point p : points) {
-            buffer += " " + p.id;
+            buffer += " " + p.toString() + "\n";
         }
         return buffer;
     }
