@@ -12,6 +12,7 @@ public class OSM {
     private static Scanner scanner;
     public static HashMap<Long,Road> roads;
     public static HashMap<Long, Point> points;
+   
 
     static String extractStringFromVal(String haystack, String needle) {
         String[] array = haystack.split("\\s+");
@@ -84,7 +85,14 @@ public class OSM {
                             assert (p != null);
                             road.points.add( p );
                         }
-                    }
+                        if (line.contains("<tag")){
+                        	String name ="name";
+                        	if(name.equals(OSM.extractStringFromVal(line, "k"))){
+                        	String roadName = OSM.extractStringFromVal(line, "v"); //Needs tweaking
+                        	road.name = roadName;
+                        	}
+                        }
+                    }                 
                     road.build(road.points);
                     ways.put( road.id, road );
                 }
