@@ -25,12 +25,14 @@ public class Report {
 
     }
 
-    public void write(Road mostpoints, CellNetwork bestCellconfig, long startT, long endT ) throws IOException {
+    public void write(Road mostpoints, CellNetwork bestCellconfig, long startT, long endT, int numCellTower, double sigma) throws IOException {
  
     	long totalT = endT - startT;
     	FileWriter fw = new FileWriter(file);
     	BufferedWriter bw = new BufferedWriter(fw);
 		bw.write("Group: Andrew and Nikko" + "\n");
+		bw.write("Number of CellTowers: " + numCellTower + "\n" );
+		bw.write("Sigma: " + sigma + "\n");
 		bw.write("Road: " + mostpoints.id + " = " + mostpoints.amountOfPoints + "\n");
 		bw.write("Best Cell Configuration: " + bestCellconfig + "\n");
 		bw.write("Performance time: " + totalT + "ms");
@@ -38,4 +40,3 @@ public class Report {
 		bw.close();
 		}
     }
-
