@@ -48,7 +48,7 @@ public class CellTower extends Point {
     
     public String toString(){
     	String str = "";
-    	return str += "id: " + this.id + ", " +  "latitude: " + this.Xs() + ", " + "longitude: " + this.Ys();
+    	return str += "id: " + this.id + ", " +  "x: " + this.Xs() + ", " + "y: " + this.Ys();
     }
     
     /*
