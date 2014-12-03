@@ -3,6 +3,8 @@ package hw2;
 public class CellTower extends Point {
     double radius;
     int coveredPoints =0;
+    double u = Xs()+radius;
+    double z = Ys() +radius;
 
     boolean isCovered(Point p) {
         double distance = 
