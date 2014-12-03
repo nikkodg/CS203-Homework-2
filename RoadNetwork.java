@@ -20,6 +20,7 @@ public class RoadNetwork {
     HashMap<Long, Point> allPoints = new HashMap<Long, Point>();
     java.util.ArrayList<Long> roadRef = new java.util.ArrayList<Long>();
     java.util.ArrayList<Point> tempPoints = new java.util.ArrayList<Point>();
+   static java.util.ArrayList<CellNetwork> deletedTowers = new java.util.ArrayList<CellNetwork>();
     
     private Scanner scanner;
     
@@ -27,8 +28,8 @@ public class RoadNetwork {
      * This method returns all possible cell network combinations
      *
      */
-    ArrayList<CellNetwork> getAllCellConfigurations(int N, double radius) {
-
+   public ArrayList<CellNetwork> getAllCellConfigurations(int N, double radius) {
+	   System.out.println("x");
         /*
          * This method will return an array of cellular networks
          * Each network consist of cell towers
@@ -53,11 +54,31 @@ public class RoadNetwork {
                 cn.add(tower);
             }
             cellNetworks.add(cn);
+            for(CellTower c : cn.towers){ // iterates through the each tower in the network just created
+//            	for(int i = 0; i < cn.towers.size(); i++ ){ // individually compares each tower against each other
+//            		 if(c.u < cn.towers.get(i).u && c.z < cn.towers.get(i).z){ //compares Xs()/Ys() + radius with other towers'
+//            			deletedTowers.add(cn); //if its true then it adds it to an arrayList of deleted towers
+//            			cellNetworks.clear();
+//            		}
+//            	}
+          }
         }
-        
+       
         return cellNetworks;
     }
 
+//    public ArrayList<CellNetwork> deleteOverlappingTowers(){
+//    	for(CellTower c : cn.towers){
+//        	for(int i = 0; i < cn.towers.size(); i++ ){
+//        		if(c.u < cn.towers.get(i).u && c.z < cn.towers.get(i).z){
+//        			deletedTowers.add(cn);
+//        			cellNetworks.remove(cn);
+//        		}
+//        	}
+//        }
+//    	return deletedTowers;
+//    }
+    
     private void readTextFormat(File file) throws IOException {
     	BufferedReader br = new BufferedReader(new FileReader(new File("text.txt")));
     	String line = "";
