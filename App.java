@@ -52,11 +52,23 @@ public class App {
 	        CellNetwork bestCellConfiguration = null;
 	        
 	        int bestScore = 0;
+	        int count = 0;
 	      
 	        for (CellNetwork cn : cellNetworkConfigurations) {
 	            // do test on cn to see if cn's score is better than bestScore
 	            // if it is update bestCellConfiguration = cn
-	        	//System.out.println(cn.towers);
+	        	for(int i = 0; i < cn.towers.size(); i++ ){		
+	        		for(int j = 0; j < cn.towers.size(); j++ ){ // individually compares each tower against each other
+	        			if(cn.towers.get(i).u < cn.towers.get(j).u && cn.towers.get(i).z < cn.towers.get(j).z){ //compares Xs()/Ys() + radius with other towers'
+	        				System.out.println(cn);
+	        				RoadNetwork.deletedTowers.add(cn); //if its true then it adds it to an arrayList of deleted towers
+	        				cn.clear();
+	        				
+           		}
+	        	}
+           }
+	        	
+	        	System.out.println(count++);
 	        	if(cn.pointsCovered() > bestScore){
 	        		bestScore = cn.coveredPoints;
 	        		bestCellConfiguration = cn;
@@ -64,6 +76,7 @@ public class App {
 	        	}
 	        		
 	        }
+	        System.out.println(roadNetwork.deletedTowers);
 //	        System.out.println("Best Score: " +  bestScore);
 //	        System.out.println("Best CellConfiguration: " +  bestCellConfiguration);
 	        bestCellConfiguration.draw();
